@@ -17,13 +17,13 @@ class Writer:
         data_df = pd.DataFrame(csv_list)
         data_df.to_csv('{}_csv.csv'.format(self.appid))
     
+
     def result_json(self):
-        with open('{}_dict.json'.format(self.appid), 'w+', encoding='utf-8') as file_json_dict:
+        with open('{}_json.json'.format(self.appid), 'w+', encoding='utf-8') as file_json_dict:
             for key,value in self.record_dict.items():
                 index = key
                 author_id,attitude,helpful,funny,updated_time,length,review = value
                 json.dump({index:{'author_id':author_id,'attitude':attitude,'helpful':helpful,'funny':funny,'updated_time':updated_time,'length':length,'review':review}}, file_json_dict, indent = 4)
-
 
     
     def result_txt(self):
