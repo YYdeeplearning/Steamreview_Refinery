@@ -8,7 +8,9 @@ __author__ =  "YU Yang"
 
 def main():
     os.chdir(os.getcwd())
-    appid = input("Please input the appid here: ")
+    # appid = input("Please input the appid here: ")
+    appid = '275850' # No Man's Sky
+
 
     SteamCollector = Spider(appid)
     source_dict, _ = SteamCollector.source()
@@ -23,6 +25,10 @@ def main():
         os.mkdir('data')
         os.chdir('data')
 
+    with open('{} Info'.format(appid),'w+',encoding='utf-8') as file_info:
+        file_info.write("positive: {}, negative: {}, total: {}, non_en_rates: {}".format(positive,negative,total,non_en_rates))
+    
+    
     SteamWriter = Writer(appid,record_dict)
     SteamWriter.write_all()
     
