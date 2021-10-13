@@ -1,10 +1,11 @@
 import re
 import nltk
 import time
+import langid
 from better_profanity import profanity
 
-from googletrans import Translator
-translator = Translator()
+# from googletrans import Translator
+# translator = Translator()
 
 
 class Extractor:
@@ -24,13 +25,17 @@ class Extractor:
             censored_review = profanity.censor(text)
             review = censored_review.replace("*","")
 
+            # try:
+            #     lang_id = translator.detect(review).lang
+            # except:
+            #     lang_id = 'error'
+            
             try:
-                lang_id = translator.detect(review).lang
+                lang_id = langid.classify(review)[0]
             except:
                 lang_id = 'error'
             
             length = len(nltk.word_tokenize(review))
-
 
             if length != 0 and lang_id == 'en':
 
