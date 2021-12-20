@@ -4,10 +4,6 @@ import time
 import langid
 from better_profanity import profanity
 
-# from googletrans import Translator
-# translator = Translator()
-
-
 class Extractor:
     def __init__(self, source_dict) -> None:
         self.source_dict = source_dict
@@ -24,11 +20,6 @@ class Extractor:
 
             censored_review = profanity.censor(text)
             review = censored_review.replace("*","")
-
-            # try:
-            #     lang_id = translator.detect(review).lang
-            # except:
-            #     lang_id = 'error'
             
             try:
                 lang_id = langid.classify(review)[0]
@@ -36,6 +27,7 @@ class Extractor:
                 lang_id = 'error'
             
             length = len(nltk.word_tokenize(review))
+
 
             if length != 0 and lang_id == 'en':
 
@@ -72,4 +64,4 @@ class Extractor:
         assert positive + negative == en_sum, "Total != POS + NEG"
         non_en_rates = non_en/total
 
-        return record_dict,positive,negative,total,non_en_rates
+        return record_dict, positive, negative, en_sum, total, non_en_rates
